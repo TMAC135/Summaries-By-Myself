@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var arr=[];
+			arr[0]='a';
+			arr[1]='b';
+			arr.push('c');
+			arr.push('d','e','f',12,34);//可以push多个元素
+			console.log(arr);
+			var res=arr.pop();
+			console.log(res);
+			console.log(arr);
+			arr.unshift(1,2,3,4,5);//从数组的开头加入多个元素
+			console.log(arr);
+			res=arr.shift();//从数组中头部弹出元素
+			console.log(res);
+			console.log(arr);
+			
+			//删除数组中某个元素，根据下标来删除，但是注意即使删除了元素，length属性不会改变，
+			//length类似于ArrayList的容量，只是一个属性，并不能实际反应数组真实的长度
+			var arr=['a','b','c','d'];
+//			alert(arr.length);
+			delete arr[0];
+//			alert(arr.length);//删除后数组的长度并没有改变，
+			console.log(arr);
+			console.log(arr.length);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

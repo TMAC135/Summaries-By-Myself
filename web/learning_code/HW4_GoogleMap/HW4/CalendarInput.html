@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- My calender -->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Ran Tian's Input Page</title>
+		<link rel="stylesheet" type="text/css" href="style2.css" />
+	</head>
+	<body>
+		<!-- head tille -->
+		<div class = "text">
+			<h1>Calendar Input</h1>
+		</div>
+		<div class="ToolBar">
+			<nav>
+				<a href="MyCalendar.html">Calendar</a>
+				<a href="CalendarInput.html">Input</a>
+			</nav>
+		</div>
+
+		<div>
+			<form method="post" action="MyCalendar.html">
+				<!-- hidden inouts which are not shown in the browser -->
+				<input type="hidden" name="email" value="tianx253@umn.edu" >
+				<input type="hidden" name="redirect" value="www.google.com">
+					<!-- event name -->
+					<label class="label">Event Name:</label>
+					<input type="text" required class="input">
+				<br>
+					<!-- start time -->
+					<label class="label">Start Time:</label>
+					<input type="text" required class="input">
+				<br>
+					<!-- end time -->
+					<label class="label">End Time:</label>
+					<input type="text" required class="input">
+				<br>
+					<!-- location -->
+					<label class="label">Location:</label>
+					<input type="text" required class="input">
+				<br>
+					<!-- submit button -->
+				<p>
+					<label>
+						<input type="submit" name="Submit" >
+					</label>
+					<label>
+						<input type="reset" name="Reset">
+					</label>
+				</p>
+			</form>
+		</div>
+		
+		<!-- Test browser -->
+		<p class="italic">*This pasge is tested in Google Chrome</p>
+
+	</body>
+</html>

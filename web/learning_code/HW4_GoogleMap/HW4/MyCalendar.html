@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!-- My calender -->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Ran Tian's Calender</title>
+		<link rel="stylesheet" type="text/css" href="style2.css" />
+		
+	</head>
+	<body>
+		<!-- head tille -->
+		<div class="text">
+			<h1>My Calendar</h1>
+		</div>
+		<div class="ToolBar">
+			<nav>
+				<a href="MyCalendar.html" >Calendar</a>
+				<a href="CalendarInput.html" >Input</a>
+			</nav>
+		</div>
+		<!-- contend of the calendar -->
+		<div>
+			<table>
+				<!-- header for the calender -->
+				<thead>
+					<tr>
+						<th class="CalendarDay"><span class="dayHeader">WeekDay</span></th>
+						<th colspan="2" class="CalendarContend"><span class="dayHeader">Course Details</span></th>
+					</tr>
+				</thead>
+				<!-- Monday -->
+				<tr>
+					<td class="CalendarDay"><span class="dayHeader">Monday</span></td>
+					<!-- CSCI 4131 -->
+					<td class="CalendarContend"><span class="italic">11:15-12:30pm</span><br/>
+						<a href="https://ay15.moodle.umn.edu/course/view.php?id=13093" target="_blank">CSCI 4131</a><br/>
+						Amunson Hall 350
+					</td>
+				</tr>
+				<!-- Tuesday -->
+				<tr>
+					<td class="CalendarDay"><span class="dayHeader">Tuesday</span></td>
+					<!-- EE 8581 -->
+					<td class="CalendarContend"><span class="italic">11:15-12:30pm</span><br/>
+						<a href="https://ay15.moodle.umn.edu/course/view.php?id=13093" target="_blank">EE 8581</a><br/>
+						Keller Hall 3125	
+					</td>
+					<!-- CSCI 5561 -->
+					<td class="CalendarContend"><span class="italic">1:00-2:15pm</span><br/>
+						<a href="https://ay15.moodle.umn.edu/course/view.php?id=13093" target="_blank">CSCI 5561</a><br/>
+						Mechanical Engineering 212	
+					</td>
+				</tr>
+				<!-- Wednesday -->
+				<tr>
+					<td class="CalendarDay"><span class="dayHeader">Wednesday</span></td>
+					<!-- CSCI 4131 -->
+					<td class="CalendarContend"><span class="italic">11:15-12:30pm</span><br/>
+						CSCI 4131<br/>
+						Amunson Hall 350
+					</td>
+					<!-- EE 5393 -->
+					<td class="CalendarContend"><span class="italic">2:30-3:45pm</span><br/>
+						EE 5393<br/>
+						Keller Hall 3230
+					</td>
+				</tr>
+				<!-- Thursday -->
+				<tr>
+					<td class="CalendarDay"><span class="dayHeader">Thursday</span></td>
+					<!-- EE 8581 -->
+					<td class="CalendarContend"><span class="italic">11:15-12:30pm</span><br/>
+						EE 8581<br/>
+						Keller Hall 3125	
+					</td>
+					<!-- CSCI 5561 -->
+					<td class="CalendarContend"><span class="italic">1:00-2:15pm</span><br/>
+						CSCI 5561<br/>
+						Mechanical Engineering 212	
+					</td>
+				</tr>
+				<!-- Friday -->
+				<tr>
+					<td class="CalendarDay"><span class="dayHeader">Friday</span></td>
+					<!-- EE 5393 -->
+					<td class="CalendarContend"><span class="italic">2:30-3:45pm</span><br/>
+						EE 5393<br/>
+						Keller Hall 3230
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!--button for searching-->
+		<div id="floating-panel">
+	      <input id="address" type="text" value="UMN">
+	      <input id="submit" type="button" value="Geocode">
+	    </div>
+		
+		<!--contend of map -->
+		<div id="map"></div>
+		<script type="text/javascript">
+		    		  // global variables 
+			      var map;
+				  var marker2 = [];
+				  var infowindow2 = [];
+				  var marker;
+				  var infowindow;
+			      
+			      function initMap() {
+				  	
+				  	//set the initial position of the map when we load in
+					var myLatLng = {lat: 44.977276, lng:-93.232266};
+			        map = new google.maps.Map(document.getElementById('map'), {
+			          center: myLatLng,
+			          zoom: 15
+			        });
+				  	
+				  	//these marker are shown when we initiate the map
+				  	var geocoder = new google.maps.Geocoder();;
+//					var geocoder = [];
+//				  	for(var i=0;i<4;i++){
+//				  		geocoder[i] = new google.maps.Geocoder();
+//				  	}
+			
+					var location = ["Keller Hall, MN","Amunson Hall,MN","Mechanical Engineering,MN","Anderson Hall,MN"]; 
+					var information =[
+						"Keller Hall"+"<br>"+"EE 8581"+"<br>"+"11.15-12:30pm",
+						"Amunson Hall"+"<br>"+"EE 5393"+"<br>"+"14.30-15:45pm",
+						"Mechanical Hall"+"<br>"+"CSCI 5561"+"<br>"+"13.00-14:15pm",
+						"Anderson Hall"+"<br>"+"CSCI 4131"+"<br>"+"11.15-12:30pm"
+					]
+					geocodeAddress(geocoder, map, location,information); 
+					
+					//this marker indicate the position where we search in the button
+					var inputGeocoder = new google.maps.Geocoder();
+					  document.getElementById('submit').addEventListener('click', function() {
+										    geocodeAddress2(inputGeocoder, map);
+										  },false);
+				  
+				  }
+			      
+					//these four markers and infor windows are shown when we initiliza the map
+					function geocodeAddress(geocoder, resultsMap, address,information) {
+						//this is not working(the inforwindow is empty), i am getting stuck with this for a long time,finally I figure out the 
+						//reason, it is happened related to the closure, we always point to the information[4] which is empty;
+//				 		for(var i=0;i<4;i++){
+//							geocoder[i].geocode({'address': address[i]}, function(results, status) {
+//								if (status === google.maps.GeocoderStatus.OK) {
+//										resultsMap.setCenter(results[0].geometry.location);
+//										marker2[i] = new google.maps.Marker({
+//													map: resultsMap,
+//													position: results[0].geometry.location,
+//													title:address[i]
+//													});
+//													
+//										infowindow2[i] = new google.maps.InfoWindow({
+//													content: function(){
+//														return information[i];
+//													}()
+//													});
+//					    
+//										google.maps.event.addListener(marker2[i], 'click', createWindow(resultsMap,infowindow2[i], marker2[i]));
+//								} else {
+//										alert('Geocode was not successful for the following reason: ' + status);
+//								} 
+//							}); 
+//						}
+							//for maker2[0] and infowindow2[0]
+							geocoder.geocode({'address': address[0]}, function(results, status) {
+								if (status === google.maps.GeocoderStatus.OK) {
+										resultsMap.setCenter(results[0].geometry.location);
+										marker2[0] = new google.maps.Marker({
+													map: resultsMap,
+													position: results[0].geometry.location,
+													title:address[0]
+													});
+										infowindow2[0] = new google.maps.InfoWindow({
+													content: information[0]
+													});
+					    
+										google.maps.event.addListener(marker2[0], 'click', createWindow(resultsMap,infowindow2[0], marker2[0]));
+								} else {
+										alert('Geocode was not successful for the following reason: ' + status);
+								} //end if-then-else
+							});
+							//for maker2[1] and infowindow2[1]
+							geocoder.geocode({'address': address[1]}, function(results, status) {
+								if (status === google.maps.GeocoderStatus.OK) {
+										resultsMap.setCenter(results[0].geometry.location);
+										marker2[1] = new google.maps.Marker({
+													map: resultsMap,
+													position: results[0].geometry.location,
+													title:address[1]
+													});
+										infowindow2[1] = new google.maps.InfoWindow({
+													content: information[1]
+													});
+					    
+										google.maps.event.addListener(marker2[1], 'click', createWindow(resultsMap,infowindow2[1], marker2[1]));
+								} else {
+										alert('Geocode was not successful for the following reason: ' + status);
+								} //end if-then-else
+							});
+		
+							//for maker2[2] and infowindow2[2]
+							geocoder.geocode({'address': address[2]}, function(results, status) {
+								if (status === google.maps.GeocoderStatus.OK) {
+										resultsMap.setCenter(results[0].geometry.location);
+										marker2[2] = new google.maps.Marker({
+													map: resultsMap,
+													position: results[0].geometry.location,
+													title:address[2]
+													});
+										infowindow2[2] = new google.maps.InfoWindow({
+													content: information[2]
+													});
+					    
+										google.maps.event.addListener(marker2[2], 'click', createWindow(resultsMap,infowindow2[2], marker2[2]));
+								} else {
+										alert('Geocode was not successful for the following reason: ' + status);
+								} //end if-then-else
+							});
+		
+							//for maker2[3] and infowindow2[3]
+							geocoder.geocode({'address': address[3]}, function(results, status) {
+								if (status === google.maps.GeocoderStatus.OK) {
+										resultsMap.setCenter(results[0].geometry.location);
+										marker2[3] = new google.maps.Marker({
+													map: resultsMap,
+													position: results[0].geometry.location,
+													title:address[3]
+													});
+										infowindow2[3] = new google.maps.InfoWindow({
+													content: information[3]
+													});
+					    
+										google.maps.event.addListener(marker2[3], 'click', createWindow(resultsMap,infowindow2[3], marker2[3]));
+								} else {
+										alert('Geocode was not successful for the following reason: ' + status);
+								} //end if-then-else
+							});
+						} // end geocodeAddress function
+					
+					//this marker and infor window show when we click the submit button
+					function geocodeAddress2(geocoder, resultsMap) {
+						  var address = document.getElementById('address').value;
+						  geocoder.geocode({'address': address}, function(results, status) {
+						    if (status === google.maps.GeocoderStatus.OK) {
+						      resultsMap.setCenter(results[0].geometry.location);
+						      marker = new google.maps.Marker({
+						        map: resultsMap,
+						        position: results[0].geometry.location,
+						        title:address
+						      });
+						      infowindow = new google.maps.InfoWindow({
+														content: address
+														});
+						      
+						      
+						      google.maps.event.addListener(marker, 'click', createWindow(resultsMap,infowindow, marker));
+						    } else {
+						      alert('Geocode was not successful for the following reason: ' + status);
+						    }
+						  });
+						}
+					
+					
+					// Function to return an anoymous function that will be called when the rmarker created in the 
+				    // geocodeAddress function is clicked	
+					function createWindow(rmap, rinfowindow, rmarker){
+				              return function(){
+								rinfowindow.open(rmap, rmarker);
+				            }
+				    }
+			</script>
+			
+			<!--add the outer link for the javascript-->
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVZDR85EzFhJGc74hP1VAvwolIcOEtce4&signed_in=true&callback=initMap"
+		        async defer></script>	
+		
+		<!-- Test browser -->
+		<p class="italic">*This pasge is tested in Google Chrome</p>
+	</body>
+</html>

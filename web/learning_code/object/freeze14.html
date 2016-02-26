@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>冻结对象,下一篇test15</title>
+	</head>
+	<body>
+<script type="text/javascript">
+var obj={
+	prop:function(){},
+	foo:'king'
+};
+obj.test='this is a test';
+delete obj.prop;
+var o=Object.freeze(obj);
+console.log(obj===o);//true
+console.log(Object.isFrozen(o));
+
+//冻结之后的任何操作都会失败
+o.x=1;
+console.log(o.x);
+console.log(o.foo);
+o.foo='queen';
+console.log(o.foo);
+
+//浅冻结的例子,类似于浅复制,对象里包含对象
+var obj1={
+internal:{}	
+};
+Object.freeze(obj1);
+obj1.internal.x=1;
+console.log(obj1.internal.x);//1
+
+//深度冻结
+function deepFreeze(obj){
+	var prop,propKey;
+	Object.freeze(obj);
+	for(propKey in obj){
+		prop=obj[propKey];
+		if(!obj.hasOwnProperty(propKey)||!(typeof prop==='object')||Object.isFrozen(prop)){
+			continue;
+		}
+		deepFreeze(prop);
+	}
+}
+
+var obj2={
+	internal:{}	
+};
+deepFreeze(obj2);
+obj2.internal.x=1;
+console.log(obj2.internal.x);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+	</body>
+</html>

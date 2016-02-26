@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>对对象使用seal,下一篇freeze14</title>
+	</head>
+	<body>
+<script type="text/javascript">
+	var obj={
+		x:1,
+		y:2,
+		username:'king'
+	};
+	obj.age=12;
+	delete obj.x;
+	var o=Object.seal(obj);
+	console.log(obj===o);//true
+	console.log(Object.isExtensible(o));//false
+	obj.y=55;
+	console.log(obj.y);//55,可以修改原来的属性
+//	Object.defineProperty(obj,'username',{
+//		get :function(){
+//			return 'this is a test';
+//		}
+//	});
+	o.z=77;
+	console.log(o.z);//没有添加成功，输出为undefined
+	console.log(o.username);
+	delete o.username;
+	console.log(o.username);//不能删除
+//	Object.defineProperties(obj,'username',{value:'queen'});
+
+	//判断是否被封闭了isSealed(obj)来检测
+	console.log(Object.isSealed(o));
+	console.log(o.username);
+	console.log(Object.getOwnPropertyDescriptor(obj,'username'));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+	</body>
+</html>

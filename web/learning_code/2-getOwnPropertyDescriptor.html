@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+<script type="text/javascript">
+	//getOwnPropertyDescriptor来得到属性描述符
+	var obj={get foo(){return 123;}};
+	console.log(Object.getOwnPropertyDescriptor(obj,'foo'));
+	obj={
+		name:'king',
+		age:12
+	};
+	console.log(Object.getOwnPropertyDescriptor(obj,'name'));
+	
+	//通过defineProperty来定义属性
+	obj={};
+	Object.defineProperty(obj,'test',{
+		value:'this is a test',
+		writable:false,
+		enumerable:false,
+		configurable:true
+	});
+	console.log(Object.getOwnPropertyDescriptor(obj,'test'));
+	
+	//以obj1为原型创建对象
+	var obj1={x:1};
+	var obj2=Object.create(obj1);
+	console.log(Object.getOwnPropertyDescriptor(obj2,'x'));
+	console.log(Object.getPrototypeOf(obj2)==obj1);//得到obj2的原型
+	
+	//constructor
+	var obj3=new Object;
+	console.log(obj3.constructor==Object);
+	var arr1=new Array;
+	console.log(arr1.constructor==Array);
+	var n=new Number(324);
+	console.log(n.constructor==Number);
+	function Test(){
+		
+	}
+	
+	//toString方法
+	var f=new Test();
+	console.log(f.constructor);//function Test(){}
+	console.log(f.toString());
+	Test.prototype.toString=function(){
+		return '这是自定义的toString方法';
+	}
+	console.log(f.toString());
+	var toString=Object.prototype.toString;
+	console.log(toString.call(new Date));
+	console.log(toString.call(new String));
+	console.log(toString.call(Math));
+	console.log(toString.call(undefined));
+	console.log(toString.call(null));
+	//valueOf方法
+	var obj={x:1};
+	console.log(obj.valueOf());
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+	</body>
+</html>

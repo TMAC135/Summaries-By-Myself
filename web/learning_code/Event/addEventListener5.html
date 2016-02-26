@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" value="test1" id='btn1' />
+		<input type="button" value="test2" id='btn2' />
+		<input type="button" value="test3" id='btn3' />
+		<script>
+			//通过addEventListener添加多个事件处理
+			var btn1=document.getElementById("btn1");
+			btn1.addEventListener('click',function(){
+				alert('a');
+			},false);
+			var handler=function(){
+				alert('b');
+			}
+			btn1.addEventListener('click',handler,false);
+			btn1.addEventListener('click',function(){
+				alert('c');
+			},false);
+			
+			//取消事件监听removeEventListener
+			var btn2=document.getElementById("btn2");
+			var count=0;
+			var handler1=function(){
+				alert(count++);
+				if(count==3){
+					alert('事件被取消了');
+					btn2.removeEventListener('click',handler1,false);
+				}
+			}
+			btn2.addEventListener('click',handler1,false);
+			
+			//取消事件必须不能是匿名的函数，即使函数体内容一样
+			var btn3=document.getElementById("btn3");
+			btn3.addEventListener('click',function(){
+				alert(123);
+				btn3.removeEventListener('click',function(){
+					alert(123);
+				},false);
+			},false);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

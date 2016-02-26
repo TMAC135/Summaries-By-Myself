@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>闭包的应用</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+//			function f(){
+//				var a=[];
+//				var i;
+//				for(i=0;i<3;i++){
+//					//闭包共同指向了变量i，最后都是3，因此不能记录0，1，2
+//					a[i]=function(){
+//						return i;
+//					};
+//				}
+//				return a;
+//			}
+//			var test=f();
+//			alert(test[0]());
+//			alert(test[1]());
+//			alert(test[2]());//结果都是3
+
+		//解决方法1，使用闭包，自调用函数，然后返回一个函数
+//		function f(){
+//			var a=[];
+//			var i;
+//			for(i=0;i<3;i++){
+//				a[i]=(function(x){
+//					return function(){
+//						return x;
+//					}
+//				})(i);
+//			}
+//			return a;
+//		}
+//			var test=f();
+//			alert(test[0]());
+//			alert(test[1]());
+//			alert(test[2]());
+		
+		//解决方法2:使用局部变量函数来保存一下
+//		function f(){
+//			function test(x){
+//				return function(){
+//					return x;
+//				}
+//			}
+//			var a=[];
+//			var i;
+//			for(i=0;i<3;i++){
+//				a[i]=test(i);
+//			}
+//			return a;
+//		}
+//		var res=f();
+//		alert(res[0]());
+//		alert(res[1]());
+//		alert(res[2]());
+//		
+		
+			
+			
+			
+			
+			
+			
+			
+		</script>
+		
+	</body>
+</html>

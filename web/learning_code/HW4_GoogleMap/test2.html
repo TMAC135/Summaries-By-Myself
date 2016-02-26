@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    	<!--<link rel="stylesheet" type="text/css" href="style.css" />-->
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+      	width: 50%;
+        height: 50%;
+        margin-left: 30%;
+      }
+#floating-panel {
+  position: relative;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="Sydney, NSW">
+      <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map"></div>
+    <script>
+var map;
+var maker2;
+var infowindow2;
+    
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    center: {lat: -34.397, lng: 150.644}
+  });
+  var geocoder = new google.maps.Geocoder();
+
+  document.getElementById('submit').addEventListener('click', function() {
+    geocodeAddress(geocoder, map);
+  });
+}
+
+function geocodeAddress(geocoder, resultsMap) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      resultsMap.setCenter(results[0].geometry.location);
+      marker2 = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+      infowindow2 = new google.maps.InfoWindow({
+								content: address
+								});
+      
+      
+      google.maps.event.addListener(marker2, 'click', createWindow(resultsMap,infowindow2, marker2));
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+					function createWindow(rmap, rinfowindow, rmarker){
+				              return function(){
+								rinfowindow.open(rmap, rmarker);
+				            }
+				    }//end create (info) window
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVZDR85EzFhJGc74hP1VAvwolIcOEtce4&signed_in=true&callback=initMap"
+        async defer></script>
+  </body>
+</html>
