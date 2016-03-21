@@ -33,7 +33,7 @@ public class Trie{
 			return;
 		}
 		TrieNode node=root;
-		char[]letters=str.toCharArray();
+		char[] letters=str.toCharArray();
 		for(int i=0,len=str.length();i<len;i++){
 			int pos=letters[i]-'a';
 			if(node.son[pos]==null){
