@@ -1,0 +1,788 @@
+
+<!-- saved from url=(0088)https://ay15.moodle.umn.edu/pluginfile.php/1577844/mod_resource/content/1/project1a.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script id="f5_cspm">(function(){var f5_cspm={f5_p:'IJCPHEFDPNIMPILALHMPMKCDHJDOENKILCNHHMOJOJLBMGGENPHMKHCHMPCAKDBKHOOIKOLEDKGMABOMAECCEMFEKDCEKNEFOOHPEDGNGAAMIPGOILFMJKIOHJALFCDB',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,32,(latency>>8));str=f5_cspm.set_byte(str,33,(latency&0xff));str=f5_cspm.set_byte(str,27,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='aaaaaaaaaaaaaaa='+encodeURIComponent(cookie_val)+';path=/';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'){if(pair[1]=='1234'){var d=new Date();d.setTime(d.getTime()-1);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;';setTimeout(f5_cspm.wait_perf_data,100);}}}}}
+f5_cspm.go();}());</script>
+  <title>
+   CSci 4041 Programming Project 1
+  </title>
+  <style>
+   a:active
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   a:link
+    { color: blue;
+      font-weight: bold;
+      text-decoration: none }
+   a:visited
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   hr
+    { background-color: black; 
+      border: none;
+      color: black;
+      height: 1px }
+   table
+    { border-collapse: collapse }
+  </style>
+ <style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></head>
+ <body bgcolor="#FFFFFF">
+  <p align="center">
+   <b>CS<small>CI</small> 4041: Algorithms and Data Structures (Day
+   &amp; Evening)</b>
+   <br>
+   <b>Programming Project #1</b>
+   <br>
+   <b>March 21, 2016</b>
+   <br>
+   <br>
+   <i>Last revision March 21, 2016</i>
+  </p>
+  <p>
+   <b>0. Introduction.</b>
+  </p>
+  <p align="justify">
+   A
+   <a href="https://en.wikipedia.org/wiki/Bloom_filter">
+    Bloom Filter
+   </a>
+   is an efficient data structure that uses hashing to test if an object is a
+   member of a large set. Bloom Filters are named for their inventor, Burton H.
+   Bloom, who published a paper describing them in 1970.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bloom Filters are <i>probabilistic</i>
+   data structures. What does that mean? Suppose that we use a Bloom Filter to
+   represent a set of objects. We ask if an object is in the set. If the Bloom
+   Filter answers ‘‘no,’’ then the object is definitely
+   not in the set. If it answers ‘‘yes,’’ then the
+   object is in the set only with some (known) probability.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Because Bloom Filters are probabilistic, we
+   can’t use them for applications that require reliable answers.
+   However, we can use them in spelling checkers. To do that, we represent a
+   large set of correctly spelled words as a Bloom Filter. If the Bloom Filter
+   says that a word is not in the set, then the word is spelled incorrectly. If
+   it says that the word is in the set, then the word may or may not be spelled
+   correctly—it may make a mistake. However, we can design the Bloom
+   Filter so that the probability of mistakes is small.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All we need now is to decide what words
+   should be in the set.
+   <a href="https://en.wikipedia.org/wiki/Basic_English">
+    Basic English
+   </a>
+   is a proposed international language invented in 1930 by Charles K. Ogden.
+   It uses 850 words from ordinary English, and a simplified English grammar.
+   Ogden intended Basic English to be easy for non-English speakers to learn
+   and use, but there has been little interest in it since the 1940’s.
+   However, if it had become popular, then today we would need programs that
+   find spelling errors in Basic English text. For this project, you must write
+   a Java class that uses a Bloom Filter to detect misspelled Basic English
+   words.
+  </p>
+  <p>
+   <b>1. Theory.</b>
+  </p>
+  <p align="justify">
+   A Bloom Filter uses an array <i>b</i> of <i>M</i> bits, where
+   <i>M</i> is large. All the bits in <i>b</i> are initially 0,
+   representing an empty set. We also have a large number of words, represented
+   as strings.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Suppose we want to add a word <i>w</i>
+   to the set represented by the Bloom Filter. To do that, we compute the
+   values of <i>j</i> distinct hash functions
+   <i>h</i>₁(<i>w</i>), <i>h</i>₂(<i>w</i>)
+   ..., <i>hⱼ</i>(<i>w</i>). Each hash function returns an
+   index into the array <i>b</i>. The indexes returned by the hash
+   functions need not all be distinct. We set all the indexed elements of
+   <i>b</i> to 1.
+  </p>
+  <blockquote>
+   <table cellpadding="0" cellspacing="0">
+    <tbody><tr valign="top">
+     <td>
+      <p>
+       <i>b</i>[<i>h</i>₁(<i>w</i>)]&nbsp;&nbsp;=&nbsp;&nbsp;1
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <i>b</i>[<i>h</i>₂(<i>w</i>)]&nbsp;&nbsp;=&nbsp;&nbsp;1
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ⋮
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="right">
+       <i>b</i>[<i>hⱼ</i>(<i>w</i>)]&nbsp;&nbsp;=&nbsp;&nbsp;1
+      </p>
+     </td>
+    </tr>
+   </tbody></table>
+  </blockquote>
+  <p align="justify">
+   Now suppose all the words have been added to the set represented by the
+   Bloom filter, and we want to test if a word <i>w</i> is in that set. To
+   do that, we test if the array elements
+   <i>b</i>[<i>h</i>₁(<i>w</i>)],
+   <i>b</i>[<i>h</i>₂(<i>w</i>)] ...,
+   <i>b</i>[<i>hⱼ</i>(<i>w</i>)] are all 1. If they are,
+   then <i>w</i> might be in the set—but we don’t know for
+   sure, because there may have been collisions. However, if at least one is 0,
+   then we know for sure that <i>w</i> is not in the set.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How likely is it that the Bloom Filter will
+   make a mistake? Suppose that the Bloom Filter represents a set of
+   <i>N</i> words. Then <i>p</i> is the probability the Bloom Filter
+   will wrongly report that a word is in the set, even though it is not.
+  </p>
+  <blockquote>
+   <p>
+    <i>p</i> = ( 1 − <i>e</i><sup>−
+    <i>jN</i>/<i>M</i></sup> ) <i><sup>j</sup></i>
+   </p>
+  </blockquote>
+  <p align="justify">
+   (Here <i>e</i>&nbsp;≈&nbsp;2.718281828, the base of natural
+   logarithms.) Using this equation, if we know how accurate we want our Bloom
+   Filter to be, then we can determine the length of its bit array
+   <i>M,</i> and how many hash functions <i>j</i> it needs.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now let’s consider the bit array
+   <i>b.</i> The obvious way to implement <i>b</i> in Java is to use
+   an array of <tt>boolean</tt>’s. However, we don’t know how
+   efficiently Java represents such an array. Does it represent each element as
+   a single bit? A byte? A word? We don’t know, and Java won’t tell
+   us. Java’s representation is important because <i>M</i> might be
+   large. For efficiency, we must implement <i>b</i> as an array of Java
+   <tt>int</tt>’s, and use the bits in the <tt>int</tt>’s
+   as <i>b</i>’s elements.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Here’s how to do that. Let
+   <tt>a</tt> be a Java array of <tt>int</tt>’s. Each
+   <tt>int</tt> has 32 bits. We use the bits of <tt>a[0]</tt> to
+   represent the elements of <i>b</i> at indexes 0 through 31, and the
+   bits of <tt>a[1]</tt> to represent the elements of <i>b</i> at
+   indexes 32 through 63, etc. This is an efficient representation because it
+   uses only one bit per element. We initially set all the
+   <tt>int</tt>’s of <tt>a</tt> to 0, so all the bits of
+   <i>b</i> are 0 as well.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Suppose we want to get the value of
+   <i>b</i>[<i>n</i>]. We first get the <tt>int</tt> element
+   <tt>a[</tt>&nbsp;⌊<i>n</i>&nbsp;/&nbsp;32⌋&nbsp;<tt>]</tt>.
+   Then we make another <tt>int</tt> <i>m,</i> with a 1-bit at
+   position <i>n</i>&nbsp;<b>mod</b>&nbsp;32, and 0-bits elsewhere.
+   We logically <small>AND</small> these two <tt>int</tt>’s
+   together. If the result is 0, then <i>b</i>[<i>n</i>] is 0,
+   otherwise <i>b</i>[<i>n</i>] is 1.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now suppose we want to set the value of
+   <i>b</i>[<i>n</i>] to 1. We compute
+   <tt>a[</tt>&nbsp;⌊<i>n</i>&nbsp;/&nbsp;32⌋&nbsp;<tt>]</tt>
+   and <i>m</i> as before. We logically <small>OR</small> the two
+   <tt>int</tt>’s together, and store the result back into
+   <tt>a[</tt>&nbsp;⌊<i>n</i>&nbsp;/&nbsp;32⌋&nbsp;<tt>]</tt>.
+   The Bloom Filter never sets bits to 0, so this is all we need.
+  </p>
+  <p>
+   <b>2. Implementation.</b>
+  </p>
+  <p align="justify">
+   You must write at least two Java classes. The first class, called
+   <tt>BitArray</tt>, implements an array of bits. It must have at least
+   the following methods, and they must work as described here and in the
+   previous section.
+  </p>
+  <blockquote>
+   <dl compact="compact">
+    <dt>
+     <p>
+      <tt>public BitArray(int M)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) Constructor. If <tt>M</tt>&nbsp;&lt;&nbsp;0, then throw
+      an <tt>IllegalArgumentException</tt>. Otherwise, make a new
+      <tt>int</tt> array that can hold <tt>M</tt> bits, to be used by
+      the other methods of this class. All the <tt>int</tt>’s in the
+      array must be initialized to 0. Note that the array’s length is not
+      necessarily <tt>M</tt>, but is computed from <tt>M</tt>.
+     </p>
+    </dd>
+    <dt>
+     <p>
+      <tt>public boolean get(int n)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) If <tt>n</tt>&nbsp;&lt;&nbsp;0 or
+      <tt>n</tt>&nbsp;≥&nbsp;<tt>M</tt>, then throw an
+      <tt>IndexOutOfRangeException</tt>. Otherwise get the bit at index
+      <tt>n</tt>, using the array that was made by the constructor. If
+      that bit is 0, then return <tt>false</tt>, otherwise return
+      <tt>true</tt>.
+     </p>
+    </dd>
+    <dt>
+     <p>
+      <tt>public void set(int n)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) If <tt>n</tt>&nbsp;&lt;&nbsp;0 or
+      <tt>n</tt>&nbsp;≥&nbsp;<tt>M</tt>, then throw an
+      <tt>IndexOutOfRangeException</tt>. Otherwise set the bit at index
+      <tt>n</tt> to 1, using the array that was made by the constructor.
+     </p>
+    </dd>
+   </dl>
+  </blockquote>
+  <p align="justify">
+   The second class, called <tt>BloomFilter</tt>, uses an instance of
+   <tt>BitArray</tt> and several hash functions to probabilistically
+   represent a large set of strings. It must have at least the following
+   methods, and they must work as described here and in the previous section.
+  </p>
+  <blockquote>
+   <dl compact="compact">
+    <dt>
+     <p>
+      <tt>public BloomFilter(int M)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) Constructor. If <tt>M</tt>&nbsp;&lt;&nbsp;0, then throw
+      an <tt>IllegalArgumentException</tt>. Otherwise make a new instance
+      of <tt>BitArray</tt>, whose size is <tt>M</tt>, to be used by
+      the other methods of this class.
+     </p>
+    </dd>
+    <dt>
+     <p>
+      <tt>private&nbsp;int&nbsp;h1(String&nbsp;w)</tt>&nbsp;
+      <br>
+      <tt>private&nbsp;int&nbsp;h2(String&nbsp;w)</tt>&nbsp;
+      <br>
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>⋮&nbsp;
+      <br>
+      <tt>private&nbsp;int&nbsp;hj(String&nbsp;w)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (10 points.) Hash functions. Each method <tt>h1</tt>,
+      <tt>h2</tt> ..., <tt>hj</tt> must use the word <tt>w</tt>
+      to compute an <tt>int</tt> greater than or equal to 0 and less than
+      <tt>M</tt>. These <tt>int</tt>’s are indexes into the
+      <tt>BitArray</tt> made by the constructor. Each method must also
+      work in <i>O</i>(<tt>w.length()</tt>) time.
+     </p>
+    </dd>
+    <dt>
+     <p>
+      <tt>public void add(String w)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) Add the word <tt>w</tt> to the set, using the
+      <tt>BitArray</tt> made by the constructor, and the hash methods
+      <tt>h1</tt>, <tt>h2</tt> ..., <tt>hj</tt>.
+     </p>
+    </dd>
+    <dt>
+     <p>
+      <tt>public boolean isIn(String w)</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) Test if the word <tt>w</tt> is in the set, using the
+      <tt>BitArray</tt> made by the constructor, and the hash methods
+      <tt>h1</tt>, <tt>h2</tt> ..., <tt>hj</tt>. Return
+      <tt>true</tt> if <tt>w</tt> may be in the set. Return
+      <tt>false</tt> if <tt>w</tt> is definitely not in the set.
+     </p>
+    </dd>
+    <dt>
+     <p>
+      <tt>public double accuracy()</tt>
+     </p>
+    </dt>
+    <dd>
+     <p align="justify">
+      (5 points.) Return the probability that the method <tt>isIn</tt>
+      will report a word is in the set, when it is not.
+     </p>
+    </dd>
+   </dl>
+  </blockquote>
+  <p align="justify">
+   You must also write a driver class with a <tt>main</tt> method (10
+   points). The <tt>main</tt> method must show that the
+   <tt>BloomFilter</tt> class works correctly. All printing must be done
+   by <tt>main</tt>: no other methods are allowed to print anything.
+   Here’s what <tt>main</tt> must do.
+  </p>
+  <ol>
+   <li>
+   <p align="justify">
+    Make a new instance of <tt>BloomFilter</tt>.
+   </p>
+   </li><li>
+   <p align="justify">
+    The file
+    <a href="https://ay15.moodle.umn.edu/pluginfile.php/1577844/mod_resource/content/1/basic.txt">
+     <tt>basic.txt</tt>
+    </a>
+    (available on Moodle) contains the 850 words of Basic English, one per
+    line. Read these words from the file and add them to the instance of
+    <tt>BloomFilter</tt>, using its <tt>add</tt> method. The file
+    <a href="https://ay15.moodle.umn.edu/pluginfile.php/1577844/mod_resource/content/1/LineReader.java">
+     <tt>LineReader.java</tt>
+    </a>
+    (also available on Moodle) contains Java source code for an iterator that
+    may make this easy.
+   </p>
+   </li><li>
+   <p align="justify">
+    Read the 850 Basic English words again, and test if each word is in the
+    instance of <tt>BloomFilter</tt>, using its <tt>isIn</tt> method.
+    Print all words for which <tt>isIn</tt> returns <tt>false</tt>.
+    For full credit, all Basic English words should be recognized by
+    <tt>isIn</tt>, so no words should be printed. You will lose 1 point
+    for each Basic English word that your Bloom Filter reports as misspelled,
+    when it is not. You will not lose more than 5 points for such words.
+   </p>
+   </li><li>
+   <p align="justify">
+    Print the value returned by the <tt>accuracy</tt> method, so we know
+    how accurate the instance of <tt>BloomFilter</tt> is for the 850 words
+    of Basic English.
+   </p>
+  </li></ol>
+  <p align="justify">
+   Here are answers to some questions you may have about this project. Other
+   questions and answers may be added later.
+  </p>
+  <blockquote>
+   <table cellpadding="0" cellspacing="0">
+    <tbody><tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Do I have to write in Java?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Yes. We need a somewhat low level language in order to do some things
+       that this assignment requires. Java is the only such language that the
+       TA’s will grade. That’s an important consideration in a
+       class this size.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       How accurate (<i>p</i>) do I need to make my Bloom Filter?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       There’s no specific requirement. The requirements are that your
+       Bloom Filter must identify all 850 Basic English words, and that its
+       <tt>accuracy</tt> method must report how accurate it is.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       How do I write the <tt>accuracy</tt> method?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Use the formula for <i>p.</i>
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       How big (<i>M</i>) do I need to make the bit array?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       The formula for <i>p</i> determines that. Also consider some things
+       about hash table sizes that were discussed in the textbook and the
+       lectures.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       How many hash methods (<i>j</i>) do I need?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       The formula for <i>p</i> determines that.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       How can I write all those hash methods?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       The Java class <tt>String</tt> has a hash method called
+       <tt>hashCode</tt>, so you have one already. You can write others
+       yourself, or you can look for them on the Internet, or both. Try
+       Googling ‘‘Java hash functions’’ or some similar
+       phrase. Some Internet hash functions are badly designed, despite what
+       their authors claim. It’s your responsibility to use good ones,
+       again according to criteria discussed in the lectures.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       How many points is each hash method worth?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       All the hash methods together are worth a total of 10 points. If each
+       hash method were worth some number of points on its own, then you could
+       inflate your score by writing many of them. Also, you can copy hash
+       methods from various sources, so they shouldn’t be worth many
+       points.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       You said nothing about resolving collisions by chaining, with buckets
+       and linked lists. Where do the linked lists go?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Bloom Filters are hash tables, but they’re different from the hash
+       tables discussed in the lectures. They don’t resolve collisions by
+       chaining, so they don’t use buckets, and they don’t use
+       linked lists.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Do I need to consider prefixes and suffixes of words? A real spelling
+       checker would do that. For example, the word <i>argument</i> is
+       detected by the Bloom Filter, but the word <i>arguments</i> is not.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Your Bloom Filter must only identify the 850 Basic English words. It
+       need not handle prefixes and suffixes. Doing that is a hard problem,
+       much harder than the one you have here.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       &nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>Q.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       I know a way to cheat. I’ll just write 850 hash functions, each of
+       which identifies a different Basic English word, and indexes its own bit
+       in the Bloom Filter. Can I do that?
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <b>A.</b>&nbsp;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       (<i>Laughter.</i>) You will receive no points for this project if
+       you do that, or anything else like that. The number of hash functions
+       (<i>j</i>) must be small compared to the size (<i>M</i>) of
+       the bit array, and the number of words (<i>N</i>).
+      </p>
+     </td>
+    </tr>
+   </tbody></table>
+  </blockquote>
+  <p align="justify">
+   Note that some questions have deliberately not been answered. Parts of this
+   project are left unspecified to make it allegedly more interesting.
+  </p>
+  <p>
+   <b>3. Deliverables.</b>
+  </p>
+  <p align="justify">
+   This assignment is worth 55 points. It will be due in about three weeks, on
+   April 8, 2016. You must turn in Java source code for your classes
+   <tt>BitArray</tt>, <tt>BloomFilter</tt>, and for your driver
+   class. For convenience, these must be all in one file. Also turn in any
+   output produced by your driver class. Put your output in a comment at the
+   bottom of the file. Note that you will recieve <i>no points</i> for
+   this assignment if the output you turn in is different from the output that
+   is actually produced.
+  </p>
+ 
+
+<audio controls="controls" style="display: none;"></audio></body></html>

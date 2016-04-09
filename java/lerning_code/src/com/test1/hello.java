@@ -81,6 +81,8 @@ public class hello {
 //		System.out.println(cur.get(2));
 		
 		
+		int a = 1;
+		System.out.println((a & (1<<0)) == 0);
 	}
 	
 	

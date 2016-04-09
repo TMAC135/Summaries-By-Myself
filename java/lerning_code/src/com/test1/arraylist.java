@@ -4,6 +4,7 @@
 package com.test1;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 
@@ -19,6 +20,11 @@ public class arraylist {
 		}
 
 		System.out.println();
+		
+		LinkedList<Integer> l = new LinkedList<>();
+		l.add(1);
+		l.add(2);
+		System.out.println(l.get(0));//linkedlist start from index 0.
 	}
  
 	public arraylist(){
