@@ -32,6 +32,8 @@ public class Test1 {
 		int []test1 = new int[10];
 		Arrays.fill(test1, 5);
 		System.out.println(Arrays.toString(test1));
+		
+		
 
 	}
 
