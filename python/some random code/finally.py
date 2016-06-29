@@ -18,7 +18,7 @@ def finalTest(n):
 		return -1
 
 # 此时nameerror 没有被捕获，但是也没有被抛给上层，因为finally语句直接返回了。 
-finalTest(-1)
+finalTest(-2)
 
 
 
